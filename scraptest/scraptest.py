@@ -2,6 +2,7 @@ from urllib.request import urlopen
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
 
+
 def get_soup(url):
     try:
         html = urlopen(url)
@@ -31,20 +32,37 @@ def get_color(url, color):
         return soup.findAll("span", color)
 
 
+def test():
+    print("Start test\n")
+
+    soup = get_soup("http://pythonscraping.com/pages/page3.html")
+
+    # for i in soup.find("table", {"id": "giftList"}).descendants:
+    for i in soup.find("table", {"id": "giftList"}).children:
+    # for i in soup.find("table", {"id": "giftList"}).tr.next_siblings:
+        print(i)
+
+    print(soup.find("img", {"src": "../img/gifts/img1.jpg"}).parent.previous_sibling)
+
+
+
+    print("\nEnd test")
+
+
 ########################
+# obj = get_head("http://pythonscraping.com/pages/page1.html")
+# if obj:
+#     print(obj)
+# else:
+#     print("Tag not found!")
 
-obj = get_head("http://pythonscraping.com/pages/page1.html")
-if obj:
-    print(obj)
-else:
-    print("Tag not found!")
+# name_list = get_color("http://pythonscraping.com/pages/warandpeace.html", {"class": "green"})
+# if name_list:
+#     for name in name_list:
+#         print(name.get_text())
+# else:
+#     print("Color not found!")
 
-name_list = get_color("http://pythonscraping.com/pages/warandpeace.html", {"class": "green"})
-if name_list:
-    for name in name_list:
-        print(name.get_text())
-else:
-    print("Color not found!")
-
+test()
 
 
