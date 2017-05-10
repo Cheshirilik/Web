@@ -1,6 +1,7 @@
 from urllib.request import urlopen
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
+import re
 
 
 def get_soup(url):
@@ -35,16 +36,22 @@ def get_color(url, color):
 def test():
     print("Start test\n")
 
+
     soup = get_soup("http://pythonscraping.com/pages/page3.html")
 
+    #soup.find("img", {"src": re.compile("\.\.\/img\/gifts\/img*\.jpg")})
     # for i in soup.find("table", {"id": "giftList"}).descendants:
-    for i in soup.find("table", {"id": "giftList"}).children:
+    # for i in soup.find("table", {"id": "giftList"}).children:
     # for i in soup.find("table", {"id": "giftList"}).tr.next_siblings:
-        print(i)
+    # for i in soup.find("table", {"id": "giftList"}).tr.next_siblings:
+    #     print(i)
 
-    print(soup.find("img", {"src": "../img/gifts/img1.jpg"}).parent.previous_sibling)
+    images = soup.findAll("img", {"src": re.compile("\.\./img/gifts/img.*\.jpg")})
+    for i in images:
+        print(i["src"])
 
-
+    images = soup.findAll(lambda tag: len(tag.attrs) == 2)
+    print(images)
 
     print("\nEnd test")
 
